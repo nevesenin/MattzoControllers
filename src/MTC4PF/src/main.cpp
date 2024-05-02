@@ -533,7 +533,12 @@ void accelerateTrainSpeed()
 
                 // determine if trains accelerates or brakes
                 accelerateFlag = abs(loco._currentTrainSpeed) < abs(loco._targetTrainSpeed) && (loco._currentTrainSpeed * loco._targetTrainSpeed > 0);
-                step = accelerateFlag ? loco._accelerateStep : loco._brakeStep;
+
+                if (accelerateFlag) {
+                    step = (loco._currentTrainSpeed < loco._firstUsefulStep) ? min(loco._currentTrainSpeed + loco._accelerateStepBelowUsefulStep, loco._firstUsefulStep) : loco._accelerateStep;
+                } else {
+                    step = (loco._currentTrainSpeed > loco._firstUsefulStep) ? max(loco._currentTrainSpeed - loco._accelerateStepBelowUsefulStep, loco._firstUsefulStep) : loco._brakeStep;
+                }
 
                 // accelerate / brake gently
                 if (loco._currentTrainSpeed < loco._targetTrainSpeed) {

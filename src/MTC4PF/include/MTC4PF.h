@@ -57,6 +57,8 @@ struct MattzoLocoConfiguration {
     String locoName;
     int locoAddress;
     int accelerationInterval;
+    int firstUsefulStep;
+    int accelerateStepBelowUsefulStep;
     int accelerateStep;
     int brakeStep;
 };
@@ -92,6 +94,8 @@ class MattzoLoco
 
     // Motor acceleration parameters
     unsigned long _accelerationInterval = 100; // pause between individual speed adjustments in milliseconds
+    int _firstUsefulStep = 0;
+    int _accelerateStepBelowUsefulStep = 4;
     int _accelerateStep = 1;                   // acceleration increment for a single acceleration step
     int _brakeStep = 2;                        // brake decrement for a single braking step
 
@@ -101,6 +105,8 @@ class MattzoLoco
         _locoName = c.locoName;
         _locoAddress = c.locoAddress;
         _accelerationInterval = c.accelerationInterval;
+        _firstUsefulStep = c.firstUsefulStep;
+        _accelerateStepBelowUsefulStep = c.accelerateStepBelowUsefulStep;
         _accelerateStep = c.accelerateStep;
         _brakeStep = c.brakeStep;
     };
